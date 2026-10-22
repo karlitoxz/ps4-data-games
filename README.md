@@ -1,267 +1,56 @@
-# 🎮 PS4 Games Complete Database
+﻿# PS4 Data Games
 
-> **6,001+ PS4 games with 38,690+ direct download links**  
-> Free PKG files for jailbroken PS4 consoles (Firmware 9.00 - 11.00)
+Catálogo estático de títulos y enlaces externos. Interfaz en español, búsqueda sin distinción de tildes, paginación de 40 títulos y opción para mostrar títulos sin enlaces.
 
-[![Games](https://img.shields.io/badge/Games-6,001-blue)](https://huggingfacer04.github.io/ps4-games-database/)
-[![Download Links](https://img.shields.io/badge/Download%20Links-38,690-green)](https://huggingfacer04.github.io/ps4-games-database/)
-[![Success Rate](https://img.shields.io/badge/Success%20Rate-100%25-brightgreen)](https://huggingfacer04.github.io/ps4-games-database/)
-[![Built with](https://img.shields.io/badge/Built%20with-Galaxy.ai-purple)](https://galaxy.ai/?via=start-building)
+Repositorio: [karlitoxz/ps4-data-games](https://github.com/karlitoxz/ps4-data-games).
 
----
+## Descargar el proyecto
 
-## 🌟 Features
+```sh
+git clone https://github.com/karlitoxz/ps4-data-games.git
+cd ps4-data-games
+```
 
-- **6,001 PS4 Games** - Complete database from dlpsgame.com
-- **38,690 Download Links** - Mediafire, 1File, Mega, Google Drive, and more
-- **Real-time Search** - Find any game instantly
-- **Alphabetical Organization** - Browse by letter (A-Z)
-- **Multiple Mirrors** - Each game has multiple download options
-- **Mobile Responsive** - Works on all devices
-- **100% Free** - No registration, no payment, no ads
+La versión actual se mantiene en la rama `main`. Para ejecutar la aplicación necesitas Python 3 y un navegador moderno; Node.js solo es necesario para las pruebas.
 
----
+## Ejecutar localmente
 
-## 🚀 Quick Start
+Desde la carpeta del repositorio:
 
-### Option 1: Use the Live Site
-Visit: **[https://huggingfacer04.github.io/ps4-games-database/](https://huggingfacer04.github.io/ps4-games-database/)**
-
-### Option 2: Run Locally
-```bash
-# Clone the repository
-git clone https://github.com/huggingfacer04/ps4-games-database.git
-cd ps4-games-database
-
-# Open in browser
-open index.html
-# or
+```sh
 python -m http.server 8000
-# Then visit: http://localhost:8000
 ```
 
----
+Abre http://127.0.0.1:8000/. Si tenías abierta la versión anterior, recarga con Ctrl+F5.
 
-## 📊 Database Statistics
+No requiere instalar dependencias ni configurar una base de datos. `index.html` carga `catalogo.js`, `catalogo.css` y `ps4_games_expanded.json`.
 
-### Total Content
-- **Games:** 6,001
-- **Download Links:** 38,690
-- **Mediafire Links:** 21,267 (54.9%)
-- **1File Links:** 16,805 (43.4%)
-- **Other Mirrors:** 618 (1.6%)
+## Datos incompletos
 
-### Top Games with Most Links
-1. **EA Sports FC 25** - 128 links
-2. **FIFA 22** - 101 links
-3. **FIFA 23** - 88 links
-4. **Prince of Persia: The Lost Crown** - 80 links
-5. **Elden Ring: Shadow of The Erdtree** - 72 links
-6. **God of War Ragnarök** - 66 links
-7. **Final Fantasy I–VI Pixel Remaster** - 59 links
-8. **Dying Light 2 Stay Human** - 58 links
-9. **Dragon Ball Z: Kakarot** - 54 links
-10. **Grand Theft Auto V** - 53 links
+La interfaz acepta categorías de enlaces ausentes, vacías o con tipos incorrectos. Omite registros sin nombre o cuyo nombre es una URL. Elimina enlaces duplicados por título, acepta solo HTTP/HTTPS y muestra el dominio real como etiqueta. Los títulos sin enlaces se ocultan inicialmente y se pueden incluir con el filtro.
 
-### Games by Category
-- **Action/Adventure:** ~1,500 games
-- **RPG:** ~600 games
-- **Sports:** ~500 games
-- **Racing:** ~300 games
-- **Fighting:** ~250 games
-- **Shooter:** ~400 games
-- **Others:** ~2,451 games
+Los JSON originales se conservan. Esta normalización no verifica que cada registro sea un juego real ni que cada dirección lleve a un archivo descargable: los datos de origen también contienen guías y páginas de navegación. Los enlaces se abren directamente en otra pestaña, sin el redireccionador antiguo.
 
----
+Con la base incluida, la aplicación identifica 6.639 títulos, de los cuales 6.450 tienen al menos un enlace con formato HTTP/HTTPS válido. Omite 10.426 registros cuyo nombre es una URL. Estas cifras describen el contenido del catálogo, no la disponibilidad de las descargas.
 
-## 🔍 How to Use
+## Solución de problemas
 
-### 1. Search for a Game
-- Type the game name in the search box
-- Results filter in real-time
-- Example: "God of War", "Spider-Man", "Final Fantasy"
+- Abre la aplicación mediante el servidor HTTP, no con doble clic en `index.html`.
+- Si aparece un error de carga, comprueba que ejecutaste Python desde la carpeta del proyecto y que `ps4_games_expanded.json` está presente. El botón **Volver a intentar** permite repetir la carga.
+- Si ves la interfaz anterior, recarga con **Ctrl+F5**.
+- Si un sitio externo no abre o un archivo ya no existe, consulta otro enlace o la página de origen del título.
 
-### 2. Browse by Letter
-- Scroll through alphabetically organized sections
-- Click on any game to see download options
+## Comprobaciones
 
-### 3. Download
-- Each game has multiple download links
-- Choose your preferred host (Mediafire, 1File, etc.)
-- Click the download button
-- Wait 8 seconds on the redirect page
-- Download begins automatically
+Con Node.js instalado:
 
----
-
-## 📁 File Structure
-
-```
-ps4-games-database/
-├── index.html                      # Main database interface
-├── redirect.html                   # Download interstitial page
-├── ps4_games_with_downloads.json   # Complete database (110,392 lines)
-└── README.md                       # This file
+```sh
+node --check catalogo.js
+node catalogo.test.cjs
 ```
 
----
+Las pruebas cubren los datos reales y registros con categorías ausentes, tipos incorrectos y enlaces duplicados o con protocolos no admitidos.
 
-## 🎯 Popular Game Series
+Las páginas `ps4-games-optimized.html`, `ps4-pwa-optimized.html` y los documentos PWA son versiones heredadas; la nueva aplicación se abre desde `index.html`. No incorpora todavía modo sin conexión ni soporte de mando.
 
-### Action/Adventure
-- Assassin's Creed (10+ games)
-- Batman Arkham series
-- God of War series
-- Grand Theft Auto V
-- Spider-Man
-- The Last of Us
-- Uncharted series
-
-### RPG
-- Final Fantasy (20+ games)
-- Dark Souls series
-- Bloodborne
-- Persona 5
-- The Witcher 3
-- Yakuza series (10+ games)
-
-### Sports
-- FIFA (10+ games)
-- NBA 2K (10+ games)
-- WWE 2K (10+ games)
-- Madden NFL series
-
-### Shooter
-- Call of Duty (12+ games)
-- Battlefield series
-- Destiny series
-- Borderlands series
-
----
-
-## 🛠️ Technical Details
-
-### Built With
-- **HTML5/CSS3** - Modern web standards
-- **JavaScript** - Dynamic functionality
-- **JSON** - Database format
-- **GitHub Pages** - Free hosting
-- **Galaxy.ai** - AI-powered development
-
-### Browser Support
-- ✅ Chrome/Edge (latest)
-- ✅ Firefox (latest)
-- ✅ Safari (latest)
-- ✅ Mobile browsers
-
-### Performance
-- **Load Time:** < 2 seconds
-- **Search Speed:** Real-time (< 100ms)
-- **Database Size:** 6.5 MB (compressed)
-
----
-
-## 📱 Mobile Support
-
-Fully responsive design works on:
-- 📱 Smartphones (320px+)
-- 📱 Tablets (768px+)
-- 💻 Laptops (1024px+)
-- 🖥️ Desktops (1920px+)
-
----
-
-## ⚠️ Important Notes
-
-### Legal Disclaimer
-- This database is for **educational purposes only**
-- All games are sourced from [dlpsgame.com](https://dlpsgame.com)
-- Requires **jailbroken PS4** (firmware 9.00 - 11.00)
-- We do not host any files - all links are external
-- Use at your own risk
-
-### Requirements
-- Jailbroken PS4 console
-- Compatible firmware (9.00 - 11.00)
-- Internet connection for downloads
-- USB drive or FTP for file transfer
-
----
-
-## 🤝 Contributing
-
-### Report Issues
-Found a broken link or error? [Open an issue](https://github.com/huggingfacer04/ps4-games-database/issues)
-
-### Suggest Improvements
-Have ideas for new features? [Start a discussion](https://github.com/huggingfacer04/ps4-games-database/discussions)
-
-### Update Database
-Want to help keep the database current? See [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)
-
----
-
-## 📈 Project Stats
-
-- **Created:** 2025-10-15
-- **Last Updated:** 2025-10-15
-- **Total Commits:** 1
-- **Contributors:** 1
-- **Stars:** ⭐ (Star this repo!)
-- **Forks:** 🍴 (Fork to customize!)
-
----
-
-## 🔗 Related Projects
-
-- **[Documentation Site](https://huggingfacer04.github.io/ps4-database-project/)** - How this was built
-- **[Galaxy.ai](https://galaxy.ai/?via=start-building)** - AI tool used to build this
-- **[dlpsgame.com](https://dlpsgame.com)** - Original source
-
----
-
-## 📞 Support
-
-### Need Help?
-- 📖 Read the [Deployment Guide](DEPLOYMENT_GUIDE.md)
-- 💬 [Open an issue](https://github.com/huggingfacer04/ps4-games-database/issues)
-- 🌐 Visit [dlpsgame.com](https://dlpsgame.com) for game-specific help
-
-### Want to Build Something Similar?
-Check out **[Galaxy.ai](https://galaxy.ai/?via=start-building)** - the AI tool that built this entire project from a single prompt!
-
----
-
-## 📜 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
-**Note:** Game files and download links are property of their respective owners. This database only provides links to publicly available content.
-
----
-
-## 🎉 Acknowledgments
-
-- **dlpsgame.com** - For providing the game database
-- **Galaxy.ai** - For making this project possible
-- **Open Source Community** - For tools and libraries used
-- **You** - For using this database!
-
----
-
-## 🌟 Star This Repo!
-
-If you find this database useful, please ⭐ star this repository to show your support!
-
----
-
-<div align="center">
-
-**Built with ❤️ using [Galaxy.ai](https://galaxy.ai/?via=start-building)**
-
-[🎮 View Database](https://huggingfacer04.github.io/ps4-games-database/) | 
-[📖 Documentation](https://huggingfacer04.github.io/ps4-database-project/) | 
-[🚀 Galaxy.ai](https://galaxy.ai/?via=start-building)
-
-</div>
-
+Los archivos de juegos no están incluidos ni alojados aquí. La disponibilidad de cada enlace depende del sitio externo.
